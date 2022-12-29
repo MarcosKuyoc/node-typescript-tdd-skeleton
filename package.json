@@ -1,0 +1,22 @@
+{
+  "name": "node-typescript-tdd-skeleton",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "prestart": "yarn run build",
+    "start": "node dist/index.js",
+    "develop": "ts-node-dev src/index.ts",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.15",
+    "jest": "^29.3.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.4"
+  }
+}
