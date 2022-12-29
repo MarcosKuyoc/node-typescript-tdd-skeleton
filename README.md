@@ -1,5 +1,5 @@
 # API Skeleton usando Node y TypeScript
-Bienvenido a nuestra API Base escrita en Node y Typescript para el manejo de nuestros proyectos, puedes clonar y comenzar a trabajar en tus propios desarollos
+Bienvenido a nuestra API Base escrita en Node y Typescript para el manejo de nuestros proyectos, puedes clonar y comenzar a trabajar en tus propios desarrollos
 
 ## Installation
 
