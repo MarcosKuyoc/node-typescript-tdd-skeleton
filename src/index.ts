@@ -5,7 +5,7 @@ app.use(express.json());
 
 const PORT = 3000;
 
-app.get('', (_req: Request, res: Response) => {
+app.get('/', (_req: Request, res: Response) => {
   res.send('Bienvenido a nuestra API REST');
 });
 
