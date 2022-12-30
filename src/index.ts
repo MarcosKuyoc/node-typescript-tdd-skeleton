@@ -1,4 +1,5 @@
 import express, {Request, Response} from 'express';
+import { Ping } from './services/ping';
 
 const app = express();
 app.use(express.json());
@@ -9,9 +10,10 @@ app.get('/', (_req: Request, res: Response) => {
   res.send('Bienvenido a nuestra API REST');
 });
 
-app.get('ping', (_req: Request, res: Response) => {
+app.get('/ping', async(_req: Request, res: Response) => {
   console.log('Alguien ha solicitado un ping!');
-  res.send('pong!');
+  const result = await Ping();
+  res.send(result);
 });
 
 app.listen(PORT, () => {
