@@ -4,19 +4,20 @@
   "main": "index.js",
   "license": "MIT",
   "engines": {
-    "node": "16.x"
+    "node": ">=16.14"
   },
   "scripts": {
     "build": "tsc",
     "prestart": "yarn run build",
     "lint": "eslint . --ext .ts",
     "lint:fix": "yarn lint --fix",
-    "start": "node dist/index.js",
+    "start": "node dev",
     "develop": "ts-node-dev src/index.ts",
     "test": "jest -c jest.unit.json",
     "prepare": "husky install"
   },
   "dependencies": {
+    "@vercel/node": "^2.8.11",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2"
