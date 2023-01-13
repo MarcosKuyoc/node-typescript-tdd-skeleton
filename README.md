@@ -15,13 +15,10 @@ $ docker-compose up -d
 
 ```bash
 # development
-$ yarn run start
-
-# watch mode
 $ yarn run develop
 
 # production mode
-$ npm run start
+$ yarn run start
 ```
 
 ## Test
@@ -37,8 +34,10 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
+## API
 
-## Stay in touch
+- Api - [deploy vercel] (https://node-typescript-tdd-skeleton.vercel.app)
+## Contáctame
 
 - Author - [Marcos Kuyoc](https://marcoskuyoc.com)
 - Email - [marcos.kuyoc.dev@gmail.com]
