@@ -1,9 +1,10 @@
-import { CheckHealth } from './check-health';
+import { CheckHealthService } from './check-health';
+
 
 describe('Primer prueba con jest', () => {
   test('should return string CheckHealth Ok!', async() => {
-    const result = await CheckHealth();
-    expect(result).toEqual('CheckHealth Ok!');
-   });
-
+    const service = new CheckHealthService();
+    const result = await service.find();
+    expect(result.info).toEqual('CheckHealth Ok!');
+  });
 });
