@@ -6,6 +6,6 @@ export default class App {
     const PORT = process.env.PORT || '3000';
 
     const server = new Server({PORT});
-    await server.listen();   
+    await server.bootstrap();   
   }
 }

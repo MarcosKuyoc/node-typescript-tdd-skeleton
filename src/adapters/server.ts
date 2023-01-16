@@ -11,7 +11,7 @@ export class Server {
     this.port = PORT
   }
 
-  async listen() {
+  async bootstrap() {
     const server = new ServerExpress(this.port);
     await server.listen();
   }
