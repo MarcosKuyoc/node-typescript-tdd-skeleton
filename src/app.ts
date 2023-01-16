@@ -6,8 +6,6 @@ export default class App {
     const PORT = process.env.PORT || '3000';
 
     const server = new BoostrapExpress(PORT);
-    await server.listen();
-   
-    console.log(`http://localhost:${PORT}`);
+    await server.listen();   
   }
 }

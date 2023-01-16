@@ -36,7 +36,7 @@ $ yarn run test:cov
 
 ## API
 
-- Api - [deploy vercel] (https://node-typescript-tdd-skeleton.vercel.app)
+- Api - [deploy vercel] (https://node-typescript-tdd-skeleton.vercel.app/explorer)
 ## Contáctame
 
 - Author - [Marcos Kuyoc](https://marcoskuyoc.com)

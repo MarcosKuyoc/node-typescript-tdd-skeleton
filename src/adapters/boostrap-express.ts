@@ -1,4 +1,6 @@
-import express from 'express'
+import express from 'express';
+import swaggerUi from 'swagger-ui-express';
+import swaggerConfig from '../modules/docs/swagger';
 import cors from 'cors';
 import * as http from 'http';
 import { router } from '../modules/routes';
@@ -18,12 +20,15 @@ export class BoostrapExpress {
     this.server.use(express.json());
     this.server.use(cors());
     this.server.use(router);
+    router.use('/explorer', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
   }
 
   async listen(): Promise<void> {
     try {
       this.httpServer = await this.server.listen(this.port);
       console.log(`Iniciando la aplicacion en el puerto ${this.port}`);
+      console.log(`http://localhost:${this.port}`);
+      console.log(`http://localhost:${this.port}/explorer`);
     } catch (error) {
       console.error(error);
       throw error;
