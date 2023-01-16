@@ -1,11 +1,11 @@
 import 'dotenv/config';
-import { BoostrapExpress } from './adapters/boostrap-express';
+import { Server } from './adapters/server';
 
 export default class App {
   async start() {
     const PORT = process.env.PORT || '3000';
 
-    const server = new BoostrapExpress(PORT);
+    const server = new Server({PORT});
     await server.listen();   
   }
 }

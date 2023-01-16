@@ -4,8 +4,9 @@ import swaggerConfig from '../modules/docs/swagger';
 import cors from 'cors';
 import * as http from 'http';
 import { router } from '../modules/routes';
+import { IServer } from './server.interface';
 
-export class BoostrapExpress {
+export class ServerExpress implements IServer {
   private server: express.Express;
   private readonly port: string;
   private httpServer?: http.Server;
