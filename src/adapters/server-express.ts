@@ -1,6 +1,6 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
-import swaggerConfig from '../modules/docs/swagger';
+import swaggerSpec from '../modules/docs/swagger';
 import cors from 'cors';
 import * as http from 'http';
 import logger from './logger/logger';
@@ -23,7 +23,7 @@ export class ServerExpress implements IServer {
     this.server.use(cors());
     this.server.use(logger);
     this.server.use(router);
-    router.use('/explorer', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
+    this.server.use('/explorer', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   }
 
   async listen(): Promise<void> {

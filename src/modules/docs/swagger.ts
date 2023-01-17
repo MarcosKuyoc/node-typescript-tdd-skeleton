@@ -1,6 +1,12 @@
 import swaggerJSDoc, { OAS3Definition, OAS3Options } from 'swagger-jsdoc';
 import {schemaCheckHealth} from '../check-health/controllers/check-health.schema';
 
+let url = 'http://localhost:3000';
+
+if (process.env.NODE_ENV === 'Production') {
+  url = (process.env.URL_VERCEL) ? process.env.URL_VERCEL : 'http://localhost:3000';
+}
+
 const swaggerDefinition: OAS3Definition = {
   openapi: '3.0.0',
   info: {
@@ -9,7 +15,7 @@ const swaggerDefinition: OAS3Definition = {
   },
   servers: [
     {
-      url: 'http://localhost:3000',
+      url,
     }
   ],
   components: {
