@@ -1,6 +1,5 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
-import morgan from 'morgan'
 import swaggerConfig from '../modules/docs/swagger';
 import cors from 'cors';
 import * as http from 'http';
@@ -22,7 +21,7 @@ export class ServerExpress implements IServer {
   init() {
     this.server.use(express.json());
     this.server.use(cors());
-    this.server.use(morgan('tiny'));
+    this.server.use(logger);
     this.server.use(router);
     router.use('/explorer', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
   }
@@ -30,11 +29,11 @@ export class ServerExpress implements IServer {
   async listen(): Promise<void> {
     try {
       this.httpServer = await this.server.listen(this.port);
-      logger.info(`Iniciando la aplicacion en el puerto ${this.port}`);
-      logger.info(`http://localhost:${this.port}`);
-      logger.info(`http://localhost:${this.port}/explorer`);
+      logger.logger.info(`Iniciando la aplicacion en el puerto ${this.port}`);
+      logger.logger.info(`http://localhost:${this.port}`);
+      logger.logger.info(`http://localhost:${this.port}/explorer`);
     } catch (error) {
-      logger.error(error);
+      logger.logger.info(error);
       throw error;
     }
   }

@@ -20,9 +20,11 @@ const router = Router();
  *            schema: 
  *              $ref: '#/components/schemas/checkhealth'
  */
-export const checkhealth = router.get('/checkhealth', async(_req: Request, res: Response) => {
+export const checkhealth = router.get('/checkhealth', async(req: Request, res: Response) => {
+  req.log.info('Testando el servicio');
   const service =  new CheckHealthService();
   const controller = new CheckHealthController(service);
   const result = await controller.find();
-  res.send(result);
+  req.log.info(result.info);
+  res.json(result).status(200);
 });
