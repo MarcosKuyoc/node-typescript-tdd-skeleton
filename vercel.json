@@ -10,6 +10,18 @@
   ],
   "routes": [
     {
+      "src": "/robots.txt",
+      "status": 204
+    },
+    {
+      "src": "/favicon.ico",
+      "status": 204
+    },
+    {
+      "src": "/explorer",
+      "status": 204
+    },
+    {
       "src": "/(.*)",
       "dest": "/src/index.ts"
     }
