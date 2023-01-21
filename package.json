@@ -14,8 +14,10 @@
     "lint:fix": "yarn lint --fix",
     "start": "node dist/index.js",
     "develop": "ts-node-dev src/index.ts",
+    "develop:debug": "ts-node-dev --files --transpile-only --respawn --inspect=4321 --project tsconfig.json src/index.ts",
     "test": "jest -c jest.unit.json",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "docker": "docker-compose up -d"
   },
   "dependencies": {
     "@vercel/node": "^2.8.11",
