@@ -1,11 +1,11 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
-import swaggerSpec from '../modules/docs/swagger';
+import swaggerSpec from '../../../modules/docs/swagger';
 import cors from 'cors';
 import * as http from 'http';
-import logger from './logger/logger';
-import { router } from '../modules/routes';
-import { IServer } from './server.interface';
+import logger from '../../logger/logger';
+import { router } from '../../../modules/routes';
+import { IServer } from '../server.interface';
 
 export class ServerExpress implements IServer {
   private server: express.Express;

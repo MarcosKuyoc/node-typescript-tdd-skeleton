@@ -1,5 +1,5 @@
 import pino from 'pino-http';
-import {Request} from 'express';
+// import {Request} from 'express';
 
 let logger = pino();
 if (process.env.NODE_ENV === 'Development') {
@@ -13,9 +13,10 @@ if (process.env.NODE_ENV === 'Development') {
       }
     },
     messageKey: 'message',
+    autoLogging: true,
     serializers: {
-      req: (req: Request) => {
-        return `${req.method} ${req.url}`
+      req: (req) => {
+        return `${req.method} ${req.url} ${req.body}, ${req.remoteAddress}`;
       },
     }
   });

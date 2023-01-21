@@ -26,5 +26,5 @@ export const checkhealth = router.get('/checkhealth', async(req: Request, res: R
   const controller = new CheckHealthController(service);
   const result = await controller.find();
   req.log.info(result.info);
-  res.json(result).status(200);
+  return res.json(result).status(200);
 });

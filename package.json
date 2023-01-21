@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "engines": {
-    "node": ">=16.14"
+    "node": ">=18.13"
   },
   "scripts": {
     "prebuild": "rimraf dist",
@@ -30,7 +30,6 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
-    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.15",
     "@types/jest": "^29.2.4",
     "@types/swagger-jsdoc": "^6.0.1",

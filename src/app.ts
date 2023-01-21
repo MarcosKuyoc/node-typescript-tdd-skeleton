@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { Server } from './adapters/server';
+import { Server } from './adapters/server/server';
 
 export default class App {
   async start() {

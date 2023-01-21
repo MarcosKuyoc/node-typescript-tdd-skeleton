@@ -1,4 +1,4 @@
-import { ServerExpress } from './server-express';
+import { ServerExpress } from './express/server-express';
 
 interface IConfig {
   PORT: string
