@@ -3,15 +3,15 @@ import { v4 as uuidv4 } from 'uuid';
 import pino from 'pino-http';
 
 export const logger = pino({
-  transport:
-  {
-    target: 'pino-pretty',
-    options: {
-      translateTime: 'SYS:dd-mm-yyyy HH:mm:ss',
-      colorize: true,
-      messageKey: 'message',
-    },
-  },
+  transport: (process.env.NODE_ENV !== 'Production') ?
+    {
+      target: 'pino-pretty',
+      options: {
+        translateTime: 'SYS:dd-mm-yyyy HH:mm:ss',
+        colorize: true,
+        messageKey: 'message',
+      },
+    }: undefined,
   customProps: function (req: any) {
     return {
       correlationId: req['X-Correlation-Id'],
