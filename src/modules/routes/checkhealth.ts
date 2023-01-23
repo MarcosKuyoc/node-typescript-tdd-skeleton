@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express';
+//import logger from '../../adapters/logger/logger';
 import { CheckHealthController } from '../check-health/controllers/check-health';
 import { CheckHealthService } from '../check-health/services/check-health';
 

@@ -1,3 +1,4 @@
+import { log } from '../../../adapters/logger';
 import { ICheckHealthResponse } from '../controllers/check-health.interface';
 
 export interface ICheckHealthService {
@@ -5,7 +6,10 @@ export interface ICheckHealthService {
 }
 
 export class CheckHealthService implements ICheckHealthService {
+  private logger = log.logger; 
+
   async find (): Promise<ICheckHealthResponse> {
+    this.logger.info(`${CheckHealthService.name}, Solictando informacion`)
     return {
       status: 200,
       info: 'CheckHealth Ok!'

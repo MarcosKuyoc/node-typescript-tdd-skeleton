@@ -2,18 +2,21 @@
 import { v4 as uuidv4 } from 'uuid';
 import pino from 'pino-http';
 
-const logger = pino({
+export const logger = pino({
   transport:
-    process.env.NODE_ENV === 'Development' ?
-      {
-        target: 'pino-pretty',
-        options: {
-          translateTime: 'SYS:dd-mm-yyyy HH:mm:ss',
-          colorize: true,
-          messageKey: 'message',
-        },
-      }
-      : undefined,
+  {
+    target: 'pino-pretty',
+    options: {
+      translateTime: 'SYS:dd-mm-yyyy HH:mm:ss',
+      colorize: true,
+      messageKey: 'message',
+    },
+  },
+  customProps: function (req: any) {
+    return {
+      correlationId: req['X-Correlation-Id'],
+    }
+  },
   genReqId: function (req: any, res: any) {
     if (req.id) return req.id;
     let id = req.get('X-Correlation-Id')
@@ -23,11 +26,6 @@ const logger = pino({
     return id;
   },
   messageKey: 'message',
-  customProps: function (req: any) {
-    return {
-      correlationId: req['X-Correlation-Id'],
-    }
-  },
   autoLogging: false,
   serializers: {
     req: (req) => {
@@ -46,12 +44,9 @@ const logger = pino({
       }
       return undefined;
     },
-    res: (res) => {
+    res: (res:any) => {
       logger.logger.info({ status: res.statusCode });
       return undefined;
     },
   }
 });
-
-
-export default logger;

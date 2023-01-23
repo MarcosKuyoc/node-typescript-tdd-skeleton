@@ -3,11 +3,12 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from '../../../modules/docs/swagger';
 import cors from 'cors';
 import * as http from 'http';
-import logger from '../../logger/logger';
 import { router } from '../../../modules/routes';
 import { IServer } from '../server.interface';
+import {logger as log} from '../../logger/logger';
 
 export class ServerExpress implements IServer {
+  private logger = log.logger;
   private server: express.Express;
   private readonly port: string;
   private httpServer?: http.Server;
@@ -21,7 +22,7 @@ export class ServerExpress implements IServer {
   init() {
     this.server.use(express.json());
     this.server.use(cors());
-    this.server.use(logger);
+    this.server.use(log);
     this.server.use(router);
     this.server.use('/explorer', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   }
@@ -29,11 +30,11 @@ export class ServerExpress implements IServer {
   async listen(): Promise<void> {
     try {
       this.httpServer = await this.server.listen(this.port);
-      logger.logger.info(`Iniciando la aplicacion en el puerto ${this.port}`);
-      logger.logger.info(`http://localhost:${this.port}`);
-      logger.logger.info(`http://localhost:${this.port}/explorer`);
+      this.logger.info(`Iniciando la aplicacion en el puerto ${this.port}`);
+      this.logger.info(`http://localhost:${this.port}`);
+      this.logger.info(`http://localhost:${this.port}/explorer`);
     } catch (error) {
-      logger.logger.info(error);
+      this.logger.info(error);
       throw error;
     }
   }

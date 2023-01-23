@@ -2,13 +2,14 @@
 import Ajv, {JSONSchemaType} from 'ajv';
 import addFormats from 'ajv-formats';
 import addErrors from 'ajv-errors';
-import logger from '../logger/logger';
 import { JTDDataType } from 'ajv/dist/core';
+import {logger as log} from '../logger/logger';
 const ajv = new Ajv({allErrors: true});
 addFormats(ajv);
 addErrors(ajv);
 
 export class ValidatorDto {
+  private logger = log.logger;
   public schema:JSONSchemaType<any>;
 
   constructor(schema: any) {
@@ -20,7 +21,7 @@ export class ValidatorDto {
     const valid = ajv.compile<Data>(this.schema);
 
     if (!valid(data)) {
-      logger.logger.error(`${ValidatorDto.name}, validate`);
+      this.logger.error(`${ValidatorDto.name}, validate`);
       throw valid.errors;
     }
     
