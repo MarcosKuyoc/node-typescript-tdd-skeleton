@@ -6,17 +6,20 @@ import * as http from 'http';
 import { router } from '../../../modules/routes';
 import { IServer } from '../server.interface';
 import {logger as log} from '../../logger/logger';
+import { DataSources } from '../../datasources/datasources';
 
 export class ServerExpress implements IServer {
   private logger = log.logger;
   private server: express.Express;
   private readonly port: string;
   private httpServer?: http.Server;
+  private datasources: DataSources;
 
   constructor(port: string) {
     this.port = port;
     this.server = express();
     this.init();
+    this.datasources = new DataSources();
   }
 
   init() {
@@ -30,6 +33,7 @@ export class ServerExpress implements IServer {
   async listen(): Promise<void> {
     try {
       this.httpServer = await this.server.listen(this.port);
+      await this.datasources.init();
       this.logger.info(`Iniciando la aplicacion en el puerto ${this.port}`);
       this.logger.info(`http://localhost:${this.port}`);
       this.logger.info(`http://localhost:${this.port}/explorer`);
