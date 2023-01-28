@@ -5,11 +5,12 @@ import cors from 'cors';
 import * as http from 'http';
 import { router } from '../../../modules/routes';
 import { IServer } from '../server.interface';
-import {logger as log} from '../../logger/logger';
 import { DataSources } from '../../datasources/datasources';
+import { Logger } from '../../logger';
+import { loggerPino } from '../../logger/logger-pino';
 
 export class ServerExpress implements IServer {
-  private logger = log.logger;
+  private logger = Logger.getInstance();
   private server: express.Express;
   private readonly port: string;
   private httpServer?: http.Server;
@@ -25,7 +26,7 @@ export class ServerExpress implements IServer {
   init() {
     this.server.use(express.json());
     this.server.use(cors());
-    this.server.use(log);
+    this.server.use(loggerPino);
     this.server.use(router);
     this.server.use('/explorer', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   }
@@ -51,10 +52,10 @@ export class ServerExpress implements IServer {
     try {
       if (this.httpServer) {
         await this.httpServer.close();
-        console.info('Cerrando la aplicación')
+        this.logger.info('Cerrando la aplicación')
       }
     } catch (error) {
-      console.error(error);
+      this.logger.error(error);
       throw error;
     }
   }

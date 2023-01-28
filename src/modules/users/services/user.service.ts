@@ -1,9 +1,9 @@
-import { log } from '../../../adapters/logger';
+import { Logger } from '../../../adapters/logger';
 import { IUserRequest, IUserResponse } from '../controllers/user.interfaces';
 import { CreateUserDto } from '../domain/dto/user.dto';
 
 export class UserService {
-  private logger = log.logger;
+  private logger = Logger.getInstance();
 
   async find(): Promise<IUserResponse[] | []>{
     try {

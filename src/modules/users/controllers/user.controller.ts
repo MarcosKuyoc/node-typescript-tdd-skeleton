@@ -1,10 +1,9 @@
-
-import { log } from '../../../adapters/logger';
+import { Logger } from '../../../adapters/logger';
 import { UserService } from '../services/user.service';
 import { IUserRequest, IUserResponse } from './user.interfaces';
 
 export class UserController {
-  private logger = log.logger;
+  private logger = Logger.getInstance();
   
   constructor(private userService: UserService) {}
 

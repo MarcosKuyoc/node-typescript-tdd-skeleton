@@ -2,6 +2,9 @@
 import { Router, Request, Response } from 'express';
 import { UserController } from '../users/controllers/user.controller';
 import { UserService } from '../users/services/user.service';
+import {Logger} from '../../adapters/logger';
+
+const logger = Logger.getInstance();
 
 const router = Router();
 /**
@@ -21,8 +24,8 @@ const router = Router();
  *            schema: 
  *              $ref: '#/components/schemas/users'
  */
-export const indexUser = router.get('/users', async(req: Request, res: Response) => {
-  req.log.info('solicita todos lo usuarios');
+export const indexUser = router.get('/users', async(_req: Request, res: Response) => {
+  logger.info('solicita todos lo usuarios');
   const service =  new UserService();
   const controller = new UserController(service);
   const result = await controller.find();
@@ -67,11 +70,11 @@ export const createUser = router.post('/users', async(req: Request, res: Respons
     const service =  new UserService();
     const controller = new UserController(service);
     const result = await controller.create(payload);
-    req.log.info('Succesfull');
+    logger.info('Succesfull');
     return res.status(200).json(result);
   } catch (error: any) {
-    req.log.error('Fallo el servicio');
-    req.log.error(error);
+    logger.error('Fallo el servicio');
+    logger.error(error);
     return res.status(404).json(error[0].params.errors);
   }
 });

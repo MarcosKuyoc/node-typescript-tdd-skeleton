@@ -3,13 +3,13 @@ import Ajv, {JSONSchemaType} from 'ajv';
 import addFormats from 'ajv-formats';
 import addErrors from 'ajv-errors';
 import { JTDDataType } from 'ajv/dist/core';
-import {logger as log} from '../logger/logger';
+import { Logger } from '../logger';
 const ajv = new Ajv({allErrors: true});
 addFormats(ajv);
 addErrors(ajv);
 
 export class ValidatorDto {
-  private logger = log.logger;
+  private logger = Logger.getInstance();
   public schema:JSONSchemaType<any>;
 
   constructor(schema: any) {

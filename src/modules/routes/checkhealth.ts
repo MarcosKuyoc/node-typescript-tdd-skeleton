@@ -2,6 +2,9 @@ import { Router, Request, Response } from 'express';
 //import logger from '../../adapters/logger/logger';
 import { CheckHealthController } from '../check-health/controllers/check-health';
 import { CheckHealthService } from '../check-health/services/check-health';
+import {Logger} from '../../adapters/logger';
+
+const logger = Logger.getInstance();
 
 const router = Router();
 /**
@@ -21,11 +24,11 @@ const router = Router();
  *            schema: 
  *              $ref: '#/components/schemas/checkhealth'
  */
-export const checkhealth = router.get('/checkhealth', async(req: Request, res: Response) => {
-  req.log.info('Testando el servicio');
+export const checkhealth = router.get('/checkhealth', async(_req: Request, res: Response) => {
+  logger.info('Testando el servicio');
   const service =  new CheckHealthService();
   const controller = new CheckHealthController(service);
   const result = await controller.find();
-  req.log.info(result.info);
+  logger.info(result.info);
   return res.json(result).status(200);
 });
