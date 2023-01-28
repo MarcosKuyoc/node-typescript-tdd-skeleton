@@ -1,1 +1,2 @@
-export {logger as log} from './logger';
+export * from './logger';
+export { loggerPino } from './logger-pino';
