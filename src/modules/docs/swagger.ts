@@ -38,6 +38,7 @@ const swaggerDefinition: OAS3Definition = {
 
 const swaggerOptions: OAS3Options = {
   swaggerDefinition,
+  basePath: '/',
   apis: ['./src/modules/routes/*.ts'],
 }
 
