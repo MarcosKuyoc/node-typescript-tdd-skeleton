@@ -25,11 +25,17 @@ const router = Router();
  *              $ref: '#/components/schemas/users'
  */
 export const indexUser = router.get('/users', async(_req: Request, res: Response) => {
-  logger.info('solicita todos lo usuarios');
-  const service =  new UserService();
-  const controller = new UserController(service);
-  const result = await controller.find();
-  return res.json(result).status(200);
+  try {
+    logger.info('solicita todos lo usuarios');
+    const service =  new UserService();
+    const controller = new UserController(service);
+    const result = await controller.find();
+    return res.json(result).status(200);
+  } catch (error: any) {
+    logger.error(`${createUser.name}  - indexUser`);
+    logger.error(error);
+    return res.status(400).json({status: 400, type: error.type, message: error.message});
+  }
 });
 
 /**
@@ -62,7 +68,11 @@ export const indexUser = router.get('/users', async(_req: Request, res: Response
  *            schema: 
  *              $ref: '#/components/schemas/users'
  *      '404':
- *          description: Invalid input
+ *          description: Error 404
+ *          content:
+ *            application/json:
+ *              schema: 
+ *                $ref: '#/components/schemas/error400'
  */
 export const createUser = router.post('/users', async(req: Request, res: Response) => {
   try {
@@ -70,11 +80,10 @@ export const createUser = router.post('/users', async(req: Request, res: Respons
     const service =  new UserService();
     const controller = new UserController(service);
     const result = await controller.create(payload);
-    logger.info('Succesfull');
     return res.status(200).json(result);
   } catch (error: any) {
-    logger.error('Fallo el servicio');
+    logger.error(`${createUser.name}  - createUser`);
     logger.error(error);
-    return res.status(404).json(error[0].params.errors);
+    return res.status(400).json({status: 400, type: error.type, message: error.message});
   }
 });

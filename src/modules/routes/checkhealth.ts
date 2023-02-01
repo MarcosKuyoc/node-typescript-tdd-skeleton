@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Router, Request, Response } from 'express';
 //import logger from '../../adapters/logger/logger';
 import { CheckHealthController } from '../check-health/controllers/check-health';
@@ -25,10 +26,16 @@ const router = Router();
  *              $ref: '#/components/schemas/checkhealth'
  */
 export const checkhealth = router.get('/checkhealth', async(_req: Request, res: Response) => {
-  logger.info('Testando el servicio');
-  const service =  new CheckHealthService();
-  const controller = new CheckHealthController(service);
-  const result = await controller.find();
-  logger.info(result.info);
-  return res.json(result).status(200);
+  try {
+    logger.info('Testando el servicio');
+    const service =  new CheckHealthService();
+    const controller = new CheckHealthController(service);
+    const result = await controller.find();
+    logger.info(result.info);
+    return res.json(result).status(200);
+  } catch (error: any) {
+    logger.error('checkhealth  - createUser');
+    logger.error(error);
+    return res.status(400).json({status: 400, message: error.message});
+  }
 });

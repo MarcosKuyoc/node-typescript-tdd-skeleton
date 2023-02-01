@@ -33,7 +33,7 @@ export class UserService {
           role: 'admin'
         }
       }
-
+      
       return null;
     } catch (error) {
       this.logger.error(`${UserService.name}, create`);

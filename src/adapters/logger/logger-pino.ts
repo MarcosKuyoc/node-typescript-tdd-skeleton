@@ -29,14 +29,8 @@ export const loggerPino = pino({
   autoLogging: true,
   serializers: {
     req: (req) => {
-      loggerPino.logger.info({
-        request: {
-          correlationId: req.id,
-          remoteAddress: req.remoteAddress,
-          method: req.method,
-          url: req.url
-        }
-      });
+      const result = `[${req.id}] [${req.remoteAddress}] ${req.method} ${req.url}`;
+      loggerPino.logger.info(result);
       if (req.method !== 'GET') {
         loggerPino.logger.info({
           payload: req.raw.body
@@ -45,13 +39,25 @@ export const loggerPino = pino({
       return undefined;
     },
     res: (res:any) => {
+      if (res.statusCode >= 400 && res.statusCode < 500) {
+        loggerPino.logger.warn(`Status: ${res.statusCode}`);
+        return undefined;
+      } else if (res.statusCode >= 500) {
+        loggerPino.logger.error(`Status: ${res.statusCode}`);
+        return undefined;
+      } else if (res.statusCode >= 300 && res.statusCode < 400) {
+        loggerPino.logger.silent(`Status: ${res.statusCode}`);
+        return undefined;
+      }
+
       loggerPino.logger.info(`Status: ${res.statusCode}`);
       return undefined;
     },
   },
   customSuccessMessage: function (req, res) {
     if (res.statusCode === 404) {
-      return 'resource not found'
+      loggerPino.logger.error('resource not found');
+      return 'resource not found';
     }
     return `${req.method} ${req.url} completed`
   }

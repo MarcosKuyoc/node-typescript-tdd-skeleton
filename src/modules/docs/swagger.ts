@@ -1,11 +1,13 @@
 import swaggerJSDoc, { OAS3Definition, OAS3Options } from 'swagger-jsdoc';
 import { schemaCheckHealth } from '../check-health/controllers/check-health.schema';
+import {  ErrorSchema } from '../errors/schemas';
 import { UserSchema } from '../users/domain/shemas';
 
-let url = 'http://localhost:3001';
+const port = process.env.PORT || '3001'
+let url = `http://localhost:${port}`;
 
 if (process.env.NODE_ENV === 'Production') {
-  url = (process.env.URL_VERCEL) ? process.env.URL_VERCEL : 'http://localhost:3001';
+  url = (process.env.URL_VERCEL) ? process.env.URL_VERCEL : url;
 }
 
 const swaggerDefinition: OAS3Definition = {
@@ -28,7 +30,8 @@ const swaggerDefinition: OAS3Definition = {
     },
     schemas: {
       checkhealth: schemaCheckHealth,
-      users: UserSchema
+      users: UserSchema,
+      error400: ErrorSchema
     }
   }
 };
