@@ -2,6 +2,8 @@ import swaggerJSDoc, { OAS3Definition, OAS3Options } from 'swagger-jsdoc';
 import { schemaCheckHealth } from '../check-health/controllers/check-health.schema';
 import {  ErrorSchema } from '../errors/schemas';
 import { UserSchema } from '../users/domain/shemas';
+import { LoginSchema } from '../users/domain/shemas/login.schema';
+import { SignUpSchema } from '../users/domain/shemas/sign-up.schema';
 
 const port = process.env.PORT || '3001'
 let url = `http://localhost:${port}`;
@@ -30,6 +32,8 @@ const swaggerDefinition: OAS3Definition = {
     },
     schemas: {
       checkhealth: schemaCheckHealth,
+      signUp: SignUpSchema,
+      login: LoginSchema,
       users: UserSchema,
       error400: ErrorSchema
     }

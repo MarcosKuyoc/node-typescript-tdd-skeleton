@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Router, Request, Response } from 'express';
 import { UserController } from '../users/controllers/user.controller';
-import { UserService } from '../users/services/user.service';
-import {Logger} from '../../adapters/logger';
+import { Logger } from '../../adapters/logger';
+import { UserMongoRepository, RoleMongoRepository } from '../users/infraestructure/repositories/mongo';
+import { UserService,  RolService } from '../users/services';
+import { Auth } from '../middleware/auth';
+import { RolAuth } from '../middleware/rol-auth';
 
 const logger = Logger.getInstance();
 
@@ -16,6 +19,8 @@ const router = Router();
  *      - users
  *    summary: 'Lista todos los usuarios'
  *    description: 'Lista todos los usuarios registrados'
+ *    security:
+ *      - bearerAuth: []
  *    responses:
  *      '200':
  *        description: 'Regresa un objecto con la información del usuario'
@@ -24,10 +29,13 @@ const router = Router();
  *            schema: 
  *              $ref: '#/components/schemas/users'
  */
-export const indexUser = router.get('/users', async(_req: Request, res: Response) => {
+export const indexUser = router.get('/users', Auth, RolAuth,  async(_req: Request, res: Response) => {
   try {
     logger.info('solicita todos lo usuarios');
-    const service =  new UserService();
+    const userRepository = new UserMongoRepository();
+    const roleRepository = new RoleMongoRepository();
+    const rolService = new RolService(roleRepository);
+    const service =  new UserService(userRepository, rolService);
     const controller = new UserController(service);
     const result = await controller.find();
     return res.json(result).status(200);
@@ -60,6 +68,8 @@ export const indexUser = router.get('/users', async(_req: Request, res: Response
  *           schema:
  *             $ref: '#/components/schemas/users'
  *       required: true
+ *    security:
+ *      - bearerAuth: []
  *    responses:
  *      '200':
  *        description: 'Regresa un objecto con la información del usuario'
@@ -77,7 +87,10 @@ export const indexUser = router.get('/users', async(_req: Request, res: Response
 export const createUser = router.post('/users', async(req: Request, res: Response) => {
   try {
     const payload = req.body;
-    const service =  new UserService();
+    const userRepository = new UserMongoRepository();
+    const roleRepository = new RoleMongoRepository();
+    const rolService = new RolService(roleRepository);
+    const service =  new UserService(userRepository, rolService);
     const controller = new UserController(service);
     const result = await controller.create(payload);
     return res.status(200).json(result);
