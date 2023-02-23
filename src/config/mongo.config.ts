@@ -1,4 +1,1 @@
-export const MONGO_CONFIG = {
-  host: process.env.MONGO_HOST || 'localhost',
-  db: process.env.MONGO_DB || 'testmongo'
-}
+export const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/testmongo';
