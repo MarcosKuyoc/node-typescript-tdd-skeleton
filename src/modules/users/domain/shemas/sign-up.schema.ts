@@ -1,4 +1,4 @@
-export const UserSchema = {
+export const SignUpSchema = {
   type: 'object',
   properties: {
     email: { type: 'string', format: 'email' },
@@ -11,7 +11,7 @@ export const UserSchema = {
   additionalProperties: false,
   required: ['email', 'password'],
   errorMessage: {
-    type: 'should be an object',
+    type: 'should be an properties',
     required: {
       email: 'should have an integer property "email"',
       password: 'should have a string property "password"'
