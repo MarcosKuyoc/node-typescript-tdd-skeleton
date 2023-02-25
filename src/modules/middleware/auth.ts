@@ -2,6 +2,7 @@
 import {Request, Response, NextFunction } from 'express';
 import { Logger } from '../../adapters/logger';
 import { verifyToken } from '../../helpers/generateToken';
+import { UserMongoRepository } from '../users/infraestructure/repositories/mongo';
 const logger = Logger.getInstance();
 
 export const Auth = async(req: Request, res: Response, next: NextFunction) => {
@@ -14,7 +15,10 @@ export const Auth = async(req: Request, res: Response, next: NextFunction) => {
       const hasId = parseTokenData.id;
       logger.info(hasId);
 
-      if (hasId) {
+      const userRepository = new UserMongoRepository();
+      const user = await userRepository.findById(hasId);
+
+      if (user) {
         next();
       } else {
         res.status(401);
@@ -26,6 +30,7 @@ export const Auth = async(req: Request, res: Response, next: NextFunction) => {
     }
   } catch (error) {
     logger.error(error);
-    throw error;
+    res.status(500);
+    res.send({error: 'Ocurrio un problema'});
   }
 } 

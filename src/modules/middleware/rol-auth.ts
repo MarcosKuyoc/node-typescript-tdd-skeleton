@@ -2,6 +2,7 @@
 import {Request, Response, NextFunction } from 'express';
 import { Logger } from '../../adapters/logger';
 import { verifyToken } from '../../helpers/generateToken';
+import { RoleMongoRepository } from '../users/infraestructure/repositories/mongo';
 const logger = Logger.getInstance();
 
 export const RolAuth = (roles: string[]) => async(req: Request, res: Response, next: NextFunction) => {
@@ -13,14 +14,11 @@ export const RolAuth = (roles: string[]) => async(req: Request, res: Response, n
       const hasId = parseTokenData.id;
 
       if (hasId) {
-        const rolesDB = {
-          roles: ['admin', 'basic']
-        };
-        const allRoles = rolesDB.roles;
-        // const userService = new UserService();
-        // const user = await userService.findById(hasId);
-
-        if (roles.some((role) => allRoles.includes(role))) {
+        const rolRepository = new RoleMongoRepository();
+        const allRoles = await rolRepository.find();
+        const listRoles = allRoles.map((role) => role.name);
+        
+        if (roles.some((role) => listRoles.includes(role))) {
           next();
         } else {
           res.status(401);
@@ -36,6 +34,7 @@ export const RolAuth = (roles: string[]) => async(req: Request, res: Response, n
     }
   } catch (error) {
     logger.error(error);
-    throw error;
+    res.status(500);
+    res.send({error: 'Ocurrio un problema'});
   }
 }
