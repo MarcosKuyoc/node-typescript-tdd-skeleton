@@ -1,5 +1,4 @@
-import { CheckHealthService } from './check-health';
-
+import { CheckHealthService } from '../../../../modules/check-health/services/check-health.service';
 
 describe('Primer prueba con jest', () => {
   test('should return string CheckHealth Ok!', async() => {

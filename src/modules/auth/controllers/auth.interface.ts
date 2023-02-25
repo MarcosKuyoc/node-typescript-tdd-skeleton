@@ -1,4 +1,4 @@
-import { IUserResponse } from '../user.interfaces';
+import { IUserResponse } from '../../users/controllers/user.interfaces';
 
 export interface ISignUp {
   email: string;

@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Router, Request, Response } from 'express';
 import { Logger } from '../../adapters/logger';
-import { LoginService, SignUpService } from '../users/services/auth';
-import { SignUpController } from '../users/controllers/auth';
-import { LoginController } from '../users/controllers/auth/login.controller';
+import { LoginService, SignUpService } from '../auth/services';
 import { CreateUserWithRolesService, RolService, UserService } from '../users/services';
 import { RoleMongoRepository, UserMongoRepository } from '../users/infraestructure/repositories/mongo';
 import { Auth } from '../middleware/auth';
 import { RolAuth } from '../middleware/rol-auth';
+import { SignUpController } from '../auth/controllers';
+import { LoginController } from '../auth/controllers/login.controller';
 
 const logger = Logger.getInstance();
 

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { UserService } from '..';
-import { Logger } from '../../../../adapters/logger';
-import { IJWToken, tokenSign } from '../../../../helpers/generateToken';
-import { compare } from '../../../../helpers/handleBcrypt';
-import { IAuthLoginService, ILogin, ILoginResponse } from '../../controllers/auth';
-import { LoginDto } from '../../domain/dto/login.dto';
+import { Logger } from '../../../adapters/logger';
+import { compare } from '../../../helpers';
+import { IJWToken, tokenSign } from '../../../helpers/generateToken';
+import { UserService } from '../../users/services';
+import { IAuthLoginService, ILogin, ILoginResponse } from '../controllers';
+import { LoginDto } from '../domain/dto';
 
 export class LoginService implements IAuthLoginService {
   private logger = Logger.getInstance();

@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Router, Request, Response } from 'express';
-//import logger from '../../adapters/logger/logger';
 import { CheckHealthController } from '../check-health/controllers/check-health';
-import { CheckHealthService } from '../check-health/services/check-health';
+import { CheckHealthService } from '../check-health/services/check-health.service';
 import {Logger} from '../../adapters/logger';
 
 const logger = Logger.getInstance();

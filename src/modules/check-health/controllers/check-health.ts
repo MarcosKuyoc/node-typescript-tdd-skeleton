@@ -1,4 +1,4 @@
-import { ICheckHealthService } from '../services/check-health';
+import { ICheckHealthService } from '../services/check-health.service';
 import { ICheckHealthResponse } from './check-health.interface';
 
 export class CheckHealthController {

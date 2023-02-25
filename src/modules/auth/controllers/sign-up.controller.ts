@@ -1,4 +1,5 @@
-import { Logger } from '../../../../adapters/logger';
+
+import { Logger } from '../../../adapters/logger';
 import { IAuthSignUpService, ISignUp } from './auth.interface';
 
 export class SignUpController {

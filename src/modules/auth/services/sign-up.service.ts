@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Logger } from '../../../../adapters/logger';
-import { IAuthSignUpService, ISignUp, ISignUpResponse } from '../../controllers/auth/auth.interface';
-import { SignUpDto } from '../../domain/dto';
-import { CreateUserWithRolesService } from '../create-user-with-roles.service';
+import { Logger } from '../../../adapters/logger';
+import { CreateUserWithRolesService } from '../../users/services';
+import { IAuthSignUpService, ISignUp, ISignUpResponse } from '../controllers';
+import { SignUpDto } from '../domain/dto';
 
 export class SignUpService implements IAuthSignUpService {
   private logger = Logger.getInstance();

@@ -7,7 +7,7 @@
     "node": ">=18.13"
   },
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "yarn clean",
     "build": "tsc",
     "prestart": "yarn run build",
     "lint": "eslint . --ext .ts",
@@ -17,6 +17,7 @@
     "develop:debug": "ts-node-dev --files --transpile-only --respawn --inspect=4321 --project tsconfig.json src/index.ts",
     "test": "jest -c jest.unit.json",
     "prepare": "husky install",
+    "clean": "rimraf dist",
     "docker": "docker-compose up -d"
   },
   "dependencies": {
