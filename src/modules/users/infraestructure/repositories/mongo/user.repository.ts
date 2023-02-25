@@ -75,6 +75,37 @@ export class UserMongoRepository implements UserRepository {
     }
   }
 
+  async findById(id: string): Promise<IUserResponse | null> {
+    try {
+      const user = await User.findById(id, {email: 1, password: 1, roles: 1});
+
+      if (!user) {
+        return null;
+      }
+
+      const rolesMongo = user.roles;
+      let roles = [];
+
+      if (rolesMongo !== undefined) {
+        roles = rolesMongo.map((role) => {
+          const rol = role._id.toString();
+          return rol;
+        });
+      }
+
+      const result = {
+        id: user._id,
+        email: user.email,
+        password: user.password,
+        roles
+      }
+      return result;
+    } catch (error) {
+      this.logger.error(`${UserMongoRepository.name}, find`);
+      throw error;
+    }
+  }
+
   async create(payload: IUserRequest): Promise<IUserResponse> {
     try {
       const newUser = new User(payload);
