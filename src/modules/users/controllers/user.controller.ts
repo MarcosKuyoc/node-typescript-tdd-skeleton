@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Logger } from '../../../adapters/logger';
-import { UserService } from '../services/user.service';
+import { CreateUserWithRolesService, UserService } from '../services';
 import { IUserRequest, IUserResponse } from './user.interfaces';
 
 export class UserController {
   private logger = Logger.getInstance();
-  
-  constructor(private userService: UserService) {}
+
+  constructor(private userService: UserService, private userWithRolesService?: CreateUserWithRolesService) {}
 
   async find(): Promise<IUserResponse[] | []> {
     this.logger.info(`${UserController.name}, find`);
@@ -15,7 +17,7 @@ export class UserController {
   async create(payload: IUserRequest): Promise<IUserResponse | null> {
     try {
       this.logger.info(`${UserController.name}, create`);
-      return await this.userService.create(payload);
+      return await this.userWithRolesService!.create(payload);
     } catch (error) {
       this.logger.error(`${UserController.name}, create`);
       throw error;

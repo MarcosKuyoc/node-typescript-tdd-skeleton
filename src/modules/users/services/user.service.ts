@@ -5,14 +5,14 @@ import { encrypt } from '../../../helpers';
 import { IUserRequest, IUserResponse } from '../controllers/user.interfaces';
 import { CreateUserDto } from '../domain/dto/user.dto';
 import { UserRepository } from '../domain/repositories/user.repository.interface';
-import { RolService } from './rol.service';
+import { IUserCreateService, IUserService } from './user.service.interface';
 
-export class UserService {
+export class UserService implements IUserService, IUserCreateService{
   private logger = Logger.getInstance();
   
-  constructor(private userRepository: UserRepository, private rolService: RolService) {}
+  constructor(private userRepository: UserRepository) {}
   
-  async find(): Promise<IUserResponse[] | []>{
+  async find(): Promise<IUserResponse[] | []> {
     try {
       this.logger.info(`${UserService.name}, find`);
       const result = await this.userRepository.find();
@@ -45,20 +45,14 @@ export class UserService {
 
       let payload = {
         email: data.email,
-        password
-      }
+        password,
+      };
 
       const hasRoles = Object.prototype.hasOwnProperty.call(data, 'roles');
-      let listRoles;
-      
-      if (hasRoles) {
-        listRoles = data.roles!
-      } else {
-        listRoles = ['basic'];
-      }
 
-      const roles = await this.rolService.findValidRoles(listRoles);
-      payload = Object.assign(payload , roles);
+      if (hasRoles) {
+        payload = Object.assign(data , data.roles);
+      }
 
       const result = await this.userRepository.create(payload);
       return result;

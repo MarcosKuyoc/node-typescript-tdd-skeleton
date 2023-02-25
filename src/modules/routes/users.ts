@@ -3,7 +3,7 @@ import { Router, Request, Response } from 'express';
 import { UserController } from '../users/controllers/user.controller';
 import { Logger } from '../../adapters/logger';
 import { UserMongoRepository, RoleMongoRepository } from '../users/infraestructure/repositories/mongo';
-import { UserService,  RolService } from '../users/services';
+import { UserService,  RolService, CreateUserWithRolesService } from '../users/services';
 import { Auth } from '../middleware/auth';
 import { RolAuth } from '../middleware/rol-auth';
 
@@ -29,13 +29,11 @@ const router = Router();
  *            schema: 
  *              $ref: '#/components/schemas/users'
  */
-export const indexUser = router.get('/users', Auth, RolAuth,  async(_req: Request, res: Response) => {
+export const indexUser = router.get('/users', Auth, RolAuth(['basic']),  async(_req: Request, res: Response) => {
   try {
     logger.info('solicita todos lo usuarios');
     const userRepository = new UserMongoRepository();
-    const roleRepository = new RoleMongoRepository();
-    const rolService = new RolService(roleRepository);
-    const service =  new UserService(userRepository, rolService);
+    const service =  new UserService(userRepository);
     const controller = new UserController(service);
     const result = await controller.find();
     return res.json(result).status(200);
@@ -55,6 +53,8 @@ export const indexUser = router.get('/users', Auth, RolAuth,  async(_req: Reques
  *      - users
  *    summary: 'Crea un nuevo usuario'
  *    description: 'Crea un nuevo usuario'
+ *    security:
+ *      - bearerAuth: []
  *    requestBody:
  *       description: Create a new pet in the store
  *       content:
@@ -68,8 +68,6 @@ export const indexUser = router.get('/users', Auth, RolAuth,  async(_req: Reques
  *           schema:
  *             $ref: '#/components/schemas/users'
  *       required: true
- *    security:
- *      - bearerAuth: []
  *    responses:
  *      '200':
  *        description: 'Regresa un objecto con la información del usuario'
@@ -84,14 +82,15 @@ export const indexUser = router.get('/users', Auth, RolAuth,  async(_req: Reques
  *              schema: 
  *                $ref: '#/components/schemas/error400'
  */
-export const createUser = router.post('/users', async(req: Request, res: Response) => {
+export const createUser = router.post('/users', Auth, RolAuth(['basic']), async(req: Request, res: Response) => {
   try {
     const payload = req.body;
     const userRepository = new UserMongoRepository();
     const roleRepository = new RoleMongoRepository();
     const rolService = new RolService(roleRepository);
-    const service =  new UserService(userRepository, rolService);
-    const controller = new UserController(service);
+    const userService =  new UserService(userRepository);
+    const userWithRolesService =  new CreateUserWithRolesService(userService, rolService);
+    const controller = new UserController(userService, userWithRolesService);
     const result = await controller.create(payload);
     return res.status(200).json(result);
   } catch (error: any) {

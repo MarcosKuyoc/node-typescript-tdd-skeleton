@@ -3,7 +3,7 @@ import { Logger } from '../../../adapters/logger';
 import { IAllSettled } from '../../interfaces';
 import { RoleRepository } from '../domain/repositories/role.repository.interface';
 
-interface IROLES {
+export interface IROLES {
   roles: string[]
 }
 

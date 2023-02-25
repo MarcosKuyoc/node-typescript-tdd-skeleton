@@ -4,9 +4,10 @@ import { Logger } from '../../adapters/logger';
 import { LoginService, SignUpService } from '../users/services/auth';
 import { SignUpController } from '../users/controllers/auth';
 import { LoginController } from '../users/controllers/auth/login.controller';
-import { RolService, UserService } from '../users/services';
+import { CreateUserWithRolesService, RolService, UserService } from '../users/services';
 import { RoleMongoRepository, UserMongoRepository } from '../users/infraestructure/repositories/mongo';
 import { Auth } from '../middleware/auth';
+import { RolAuth } from '../middleware/rol-auth';
 
 const logger = Logger.getInstance();
 
@@ -43,15 +44,16 @@ const router = Router();
  *            schema: 
  *              $ref: '#/components/schemas/signUp'
  */
-export const singUpRoute = router.post('/auth/sign-up', Auth, async(req: Request, res: Response) => {
+export const singUpRoute = router.post('/auth/sign-up', Auth, RolAuth(['admin']), async(req: Request, res: Response) => {
   try {
     logger.info('Registro de usuarios');
     const userRepository = new UserMongoRepository();
+    const userService = new UserService(userRepository);
     const roleRepository = new RoleMongoRepository();
     const rolService = new RolService(roleRepository);
-    const userService = new UserService(userRepository, rolService);
+    const userWithRolesService =  new CreateUserWithRolesService(userService, rolService);
     const payload = req.body;
-    const service =  new SignUpService(userService);
+    const service =  new SignUpService(userWithRolesService);
     const controller = new SignUpController(service);
     const result = await controller.signUp(payload);
     return res.json(result).status(200);
@@ -96,9 +98,7 @@ export const loginRoute = router.post('/auth/login', async(req: Request, res: Re
   try {
     const payload = req.body;
     const userRepository = new UserMongoRepository();
-    const roleRepository = new RoleMongoRepository();
-    const rolService = new RolService(roleRepository);
-    const userService = new UserService(userRepository, rolService);
+    const userService = new UserService(userRepository);
     const service =  new LoginService(userService);
     const controller = new LoginController(service);
     const result = await controller.login(payload);
