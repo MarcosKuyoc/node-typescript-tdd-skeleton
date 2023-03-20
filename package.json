@@ -16,6 +16,7 @@
     "develop": "ts-node-dev src/index.ts",
     "develop:debug": "ts-node-dev --files --transpile-only --respawn --inspect=4321 --project tsconfig.json src/index.ts",
     "test": "jest -c jest.unit.json",
+    "coverage": "jest -c jest.unit.json --collect-coverage",
     "prepare": "husky install",
     "clean": "rimraf dist",
     "docker": "docker-compose up -d"

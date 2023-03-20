@@ -2,16 +2,37 @@
 import { v4 as uuidv4 } from 'uuid';
 import pino from 'pino-http';
 
+const transportTest = {
+  target: 'pino-pretty',
+  options: {
+    ignore : 'pid,hostname,time',
+    colorize: true,
+    translateTime: false,
+    messageKey: 'message',
+    sync: true,
+  },
+}; 
+const transportDev = {
+  target: 'pino-pretty',
+  options: {
+    levelFirst: false,
+    translateTime: 'SYS:dd-mm-yyyy HH:mm:ss',
+    colorize: true,
+    messageKey: 'message',
+  },
+};
+
+let transportOptions = undefined;
+
+if (process.env.NODE_ENV=== 'Development') {
+  transportOptions= transportDev;
+}
+if (process.env.NODE_ENV=== 'test') {
+  transportOptions= transportTest;
+}
+
 export const loggerPino = pino({
-  transport: (process.env.NODE_ENV !== 'Production') ?
-    {
-      target: 'pino-pretty',
-      options: {
-        translateTime: 'SYS:dd-mm-yyyy HH:mm:ss',
-        colorize: true,
-        messageKey: 'message',
-      },
-    }: undefined,
+  transport: transportOptions,
   customProps: function (req: any) {
     return {
       correlationId: req['X-Correlation-Id'],
