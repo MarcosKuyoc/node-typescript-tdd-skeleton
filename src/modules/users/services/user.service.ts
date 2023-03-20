@@ -43,7 +43,7 @@ export class UserService implements IUserService, IUserCreateService{
       await userDto.validate(data);
       const password = await encrypt(data.password);
 
-      let payload = {
+      let payload: IUserRequest = {
         email: data.email,
         password,
       };
@@ -51,14 +51,16 @@ export class UserService implements IUserService, IUserCreateService{
       const hasRoles = Object.prototype.hasOwnProperty.call(data, 'roles');
 
       if (hasRoles) {
-        payload = Object.assign(data , data.roles);
+        payload = {...payload, roles: data.roles};
       }
 
       const result = await this.userRepository.create(payload);
       return result;
-    } catch (error) {
+    } catch (error: Error | any) {
       this.logger.error(`${UserService.name}, create`);
-      throw error;
+      this.logger.error(`${JSON.stringify(error)}`);
+      this.logger.error(`${error.message}`);
+      throw new Error(error.message);
     }
   }
 }

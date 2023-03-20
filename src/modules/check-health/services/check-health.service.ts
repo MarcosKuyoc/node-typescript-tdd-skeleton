@@ -9,7 +9,7 @@ export class CheckHealthService implements ICheckHealthService {
   private logger = Logger.getInstance(); 
 
   async find (): Promise<ICheckHealthResponse> {
-    this.logger.info(`${CheckHealthService.name}, Solictando informacion`)
+    this.logger.info(`${CheckHealthService.name}, Solicitando información`)
     return {
       status: 200,
       info: 'CheckHealth Ok!'

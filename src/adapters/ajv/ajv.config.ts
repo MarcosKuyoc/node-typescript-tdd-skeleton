@@ -22,7 +22,16 @@ export class ValidatorDto {
 
     if (!valid(data)) {
       this.logger.error(`${ValidatorDto.name}, validate`);
-      throw valid.errors;
+      const errors = valid.errors;
+      const message = errors?.map((error: any) => {
+        return error.message;
+      });
+      const errorMessage = {
+        type: 'validationError',
+        message: message,
+        status: 400
+      }
+      throw errorMessage;
     }
     
     return data;

@@ -1,5 +1,6 @@
 {
   "preset": "ts-jest",
   "testEnvironment": "node",
+  "silent": true,
   "testPathIgnorePatterns": ["/node_modules/"]
 }

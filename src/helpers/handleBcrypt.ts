@@ -9,9 +9,9 @@ export const encrypt = async(textPlain: string): Promise<string> => {
     const salt = await bcrypt.genSaltSync(saltRounds);
     const hash = await bcrypt.hashSync(textPlain, salt);
     return hash;
-  } catch (error) {
+  } catch (error: any) {
     logger.error('encrypt');
-    logger.error(error);
+    logger.error(error.message);
     throw error;
   }
 }
@@ -19,9 +19,9 @@ export const encrypt = async(textPlain: string): Promise<string> => {
 export const compare = async (textPlain: string, hash: string) => {
   try {
     return await bcrypt.compareSync(textPlain, hash);
-  } catch (error) {
+  } catch (error: any) {
     logger.error('encrypt');
-    logger.error(error);
+    logger.error(error.message);
     throw error;
   }
 }
