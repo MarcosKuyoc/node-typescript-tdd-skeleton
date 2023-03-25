@@ -1,24 +1,25 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Logger } from '../../../adapters/logger';
-import { CreateUserWithRolesService } from '../../users/services';
-import { IAuthSignUpService, ISignUp, ISignUpResponse } from '../controllers';
-import { SignUpDto } from '../domain/dto';
+import { IUserCreateService } from '../../users/domain/services';
+import { ISignUp, ISignUpResponse } from '../controllers';
+import { SignUpDto } from '../domain/dtos';
+import { IAuthSignUpService } from '../domain/services/';
 
-export class SignUpService implements IAuthSignUpService {
+export class SignUpUseCase implements IAuthSignUpService {
   private logger = Logger.getInstance();
 
-  constructor(private createUserWithRolesService: CreateUserWithRolesService) {}
+  constructor(private createUserWithRolesService: IUserCreateService) {}
 
   async signUp(data: ISignUp): Promise<ISignUpResponse> {
     try {
-      this.logger.info(`${SignUpService.name}, signUp`);
+      this.logger.info(`${SignUpUseCase.name}, signUp`);
       const singUpDto = new SignUpDto();
       await singUpDto.validate(data);
 
       return await this.createUserWithRolesService.create(data);
     } catch (error: any) {
-      this.logger.error(`${SignUpService.name}, signUp`);
+      this.logger.error(`${SignUpUseCase.name}, signUp`);
       this.logger.error(`${error.message}`);
       throw error;
     }

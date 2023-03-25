@@ -1,6 +1,7 @@
 
+import { ISignUp } from '.';
 import { Logger } from '../../../adapters/logger';
-import { IAuthSignUpService, ISignUp } from './auth.interface';
+import { IAuthSignUpService } from '../domain/services';
 
 export class SignUpController {
   private logger = Logger.getInstance();

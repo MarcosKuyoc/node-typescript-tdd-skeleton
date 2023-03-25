@@ -2,11 +2,12 @@
 import { Logger } from '../../../adapters/logger';
 import { compare } from '../../../helpers';
 import { IJWToken, tokenSign } from '../../../helpers/generateToken';
-import { UserService } from '../../users/services';
-import { IAuthLoginService, ILogin, ILoginResponse } from '../controllers';
-import { LoginDto } from '../domain/dto';
+import { UserService } from '../../users/application/services';
+import { ILogin, ILoginResponse } from '../controllers';
+import { LoginDto } from '../domain/dtos';
+import { IAuthLoginService } from '../domain/services';
 
-export class LoginService implements IAuthLoginService {
+export class LoginUseCase implements IAuthLoginService {
   private logger = Logger.getInstance();
 
   constructor(private userService: UserService) {}
@@ -42,7 +43,7 @@ export class LoginService implements IAuthLoginService {
       }
 
     } catch (error: any) {
-      this.logger.error(`${LoginService.name}, login`);
+      this.logger.error(`${LoginUseCase.name}, login`);
       this.logger.error(`${error.message}`);
       throw error;
     }

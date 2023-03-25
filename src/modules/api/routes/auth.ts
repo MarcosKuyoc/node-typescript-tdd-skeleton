@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Router, Request, Response } from 'express';
-import { Logger } from '../../adapters/logger';
-import { LoginService, SignUpService } from '../auth/services';
-import { CreateUserWithRolesService, RolService, UserService } from '../users/services';
-import { RoleMongoRepository, UserMongoRepository } from '../users/infraestructure/repositories/mongo';
-import { Auth } from '../middleware/auth';
-import { RolAuth } from '../middleware/rol-auth';
-import { SignUpController } from '../auth/controllers';
-import { LoginController } from '../auth/controllers/login.controller';
+import { Logger } from '../../../adapters/logger';
+import { LoginUseCase, SignUpUseCase } from '../../auth/aplication';
+import { RolService, UserService } from '../../users/application/services';
+import { RoleMongoRepository, UserMongoRepository } from '../../users/infraestructure/repositories/mongo';
+import { LoginController, SignUpController } from '../../auth/controllers';
+import { CreateUserWithRolesService } from '../../users/application/usecases';
+import { Auth, RolAuth } from '../middleware';
 
 const logger = Logger.getInstance();
 
@@ -53,7 +52,7 @@ export const singUpRoute = router.post('/auth/sign-up', Auth, RolAuth(['admin'])
     const rolService = new RolService(roleRepository);
     const userWithRolesService =  new CreateUserWithRolesService(userService, rolService);
     const payload = req.body;
-    const service =  new SignUpService(userWithRolesService);
+    const service =  new SignUpUseCase(userWithRolesService);
     const controller = new SignUpController(service);
     const result = await controller.signUp(payload);
     return res.json(result).status(200);
@@ -99,7 +98,7 @@ export const loginRoute = router.post('/auth/login', async(req: Request, res: Re
     const payload = req.body;
     const userRepository = new UserMongoRepository();
     const userService = new UserService(userRepository);
-    const service =  new LoginService(userService);
+    const service =  new LoginUseCase(userService);
     const controller = new LoginController(service);
     const result = await controller.login(payload);
     return res.status(200).json(result);

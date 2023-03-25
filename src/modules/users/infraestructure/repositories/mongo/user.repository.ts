@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Logger } from '../../../../../adapters/logger';
-import { IUserRequest, IUserResponse } from '../../../controllers/user.interfaces';
+import { IUserRequest, IUserResponse } from '../../../controllers/user.interface';
 import { UserRepository } from '../../../domain/repositories/user.repository.interface';
 import User from '../../models/mongo/user';
 

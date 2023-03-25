@@ -14,12 +14,12 @@ const transportDev = {
 
 let transportOptions = undefined;
 
-if (process.env.NODE_ENV=== 'Development') {
+if (process.env.NODE_ENV=== 'development') {
   transportOptions= transportDev;
 }
 let enabled = true;
 
-if (process.env.NODE_ENV=== 'test' || process.env.LOG_ENABLED === 'true') {
+if (process.env.NODE_ENV=== 'test' || process.env.LOG_ENABLED === 'false') {
   enabled = false;
 }
 

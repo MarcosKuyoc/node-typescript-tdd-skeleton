@@ -1,4 +1,4 @@
-import { IUserRequest, IUserResponse } from '../controllers/user.interfaces';
+import { IUserRequest, IUserResponse } from '../../controllers/user.interface';
 
 export interface IUserService {
   find(): Promise<IUserResponse[] | []>;

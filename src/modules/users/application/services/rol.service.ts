@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Logger } from '../../../adapters/logger';
-import { IAllSettled } from '../../interfaces';
-import { RoleRepository } from '../domain/repositories/role.repository.interface';
+import { Logger } from '../../../../adapters/logger';
+import { IAllSettled } from '../../../shared/interfaces';
+import { RoleRepository } from '../../domain/repositories/';
 
 export interface IROLES {
   roles: string[]

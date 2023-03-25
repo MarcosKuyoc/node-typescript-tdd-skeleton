@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Logger } from '../../../adapters/logger';
-import { IUserRequest, IUserResponse } from '../controllers/user.interfaces';
-import { IROLES, RolService } from './rol.service';
-import { UserService } from './user.service';
-import { IUserCreateService } from './user.service.interface';
+import { Logger } from '../../../../adapters/logger';
+import { IUserRequest, IUserResponse } from '../../controllers/user.interface';
+import { IROLES, RolService } from '../services/rol.service';
+import { UserService } from '../services/user.service';
+import { IUserCreateService } from '../../domain/services/user.service.interface';
 
 export class CreateUserWithRolesService implements IUserCreateService {
   private logger = Logger.getInstance();

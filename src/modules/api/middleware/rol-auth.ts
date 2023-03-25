@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {Request, Response, NextFunction } from 'express';
-import { Logger } from '../../adapters/logger';
-import { verifyToken } from '../../helpers/generateToken';
-import { RoleMongoRepository } from '../users/infraestructure/repositories/mongo';
+import { Logger } from '../../../adapters/logger';
+import { verifyToken } from '../../../helpers/generateToken';
+import { RoleMongoRepository } from '../../users/infraestructure/repositories/mongo';
 const logger = Logger.getInstance();
 
 export const RolAuth = (roles: string[]) => async(req: Request, res: Response, next: NextFunction) => {

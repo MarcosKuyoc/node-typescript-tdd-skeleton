@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Logger } from '../../../adapters/logger';
-import { CreateUserWithRolesService, UserService } from '../services';
-import { IUserRequest, IUserResponse } from './user.interfaces';
+import { UserService } from '../application/services';
+import { CreateUserWithRolesService } from '../application/usecases';
+import { IUserRequest, IUserResponse } from './user.interface';
 
 export class UserController {
   private logger = Logger.getInstance();

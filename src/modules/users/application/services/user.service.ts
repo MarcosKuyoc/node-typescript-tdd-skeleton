@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Logger } from '../../../adapters/logger';
-import { encrypt } from '../../../helpers';
-import { IUserRequest, IUserResponse } from '../controllers/user.interfaces';
-import { CreateUserDto } from '../domain/dto/user.dto';
-import { UserRepository } from '../domain/repositories/user.repository.interface';
-import { IUserCreateService, IUserService } from './user.service.interface';
+import { Logger } from '../../../../adapters/logger';
+import { encrypt } from '../../../../helpers';
+import { IUserRequest, IUserResponse } from '../../controllers/';
+import { CreateUserDto } from '../../domain/dtos';
+import { UserRepository } from '../../domain/repositories/';
+import { IUserCreateService, IUserService } from '../../domain/services/';
 
 export class UserService implements IUserService, IUserCreateService{
   private logger = Logger.getInstance();

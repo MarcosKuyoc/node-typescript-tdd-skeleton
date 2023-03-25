@@ -1,6 +1,7 @@
 
 import { Logger } from '../../../adapters/logger';
-import { IAuthLoginService, ILogin } from './auth.interface';
+import { IAuthLoginService } from '../domain/services';
+import { ILogin } from './login.interface';
 
 export class LoginController {
   private logger = Logger.getInstance();

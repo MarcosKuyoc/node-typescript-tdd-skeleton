@@ -1,14 +1,14 @@
 import swaggerJSDoc, { OAS3Definition, OAS3Options } from 'swagger-jsdoc';
-import { schemaCheckHealth } from '../check-health/controllers/check-health.schema';
+import { schemaCheckHealth } from '../../check-health/controllers/check-health.schema';
 import {  ErrorSchema } from '../errors/schemas';
-import { UserSchema } from '../users/domain/shemas';
-import { LoginSchema } from '../auth/domain/schemas/login.schema';
-import { SignUpSchema } from '../auth/domain/schemas/sign-up.schema';
+import { UserSchema } from '../../users/domain/shemas';
+import { LoginSchema } from '../../auth/domain/schemas/login.schema';
+import { SignUpSchema } from '../../auth/domain/schemas/sign-up.schema';
 
-const port = process.env.PORT || '3001'
+const port = process.env.PORT || '3000'
 let url = `http://localhost:${port}`;
 
-if (process.env.NODE_ENV === 'Production') {
+if (process.env.NODE_ENV === 'production') {
   url = (process.env.URL_VERCEL) ? process.env.URL_VERCEL : url;
 }
 
@@ -43,7 +43,7 @@ const swaggerDefinition: OAS3Definition = {
 const swaggerOptions: OAS3Options = {
   swaggerDefinition,
   basePath: '/',
-  apis: ['./src/modules/routes/*.ts'],
+  apis: ['./src/modules/api/routes/*.ts'],
 }
 
 export default swaggerJSDoc(swaggerOptions);

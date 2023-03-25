@@ -1,9 +1,9 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
-import swaggerSpec from '../../../modules/docs/swagger';
+import swaggerSpec from '../../../modules/api/docs/swagger';
 import cors from 'cors';
 import * as http from 'http';
-import { router } from '../../../modules/routes';
+import { router } from '../../../modules/api/routes';
 import { IServer } from '../server.interface';
 import { DataSources } from '../../datasources/datasources';
 import { Logger } from '../../logger';
