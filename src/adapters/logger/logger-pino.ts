@@ -1,17 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { v4 as uuidv4 } from 'uuid';
 import pino from 'pino-http';
-
-const transportTest = {
-  target: 'pino-pretty',
-  options: {
-    ignore : 'pid,hostname,time',
-    colorize: true,
-    translateTime: false,
-    messageKey: 'message',
-    sync: true,
-  },
-}; 
+ 
 const transportDev = {
   target: 'pino-pretty',
   options: {
@@ -27,11 +17,14 @@ let transportOptions = undefined;
 if (process.env.NODE_ENV=== 'Development') {
   transportOptions= transportDev;
 }
-if (process.env.NODE_ENV=== 'test') {
-  transportOptions= transportTest;
+let enabled = true;
+
+if (process.env.NODE_ENV=== 'test' || process.env.LOG_ENABLED === 'true') {
+  enabled = false;
 }
 
 export const loggerPino = pino({
+  enabled,
   transport: transportOptions,
   customProps: function (req: any) {
     return {
