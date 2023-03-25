@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IUserRequest, IUserResponse } from '../../../../modules/users/controllers/user.interface';
-import { UserRepository } from '../../../../modules/users/domain/repositories';
-import { UserService } from '../../../../modules/users/application/services/user.service';
+import { IUserRequest, IUserResponse } from '../../controllers/user.interface';
+import { UserRepository } from '../../domain/repositories';
+import { UserService } from './user.service';
 
 describe('User Service', () => {
   let userService: UserService;
