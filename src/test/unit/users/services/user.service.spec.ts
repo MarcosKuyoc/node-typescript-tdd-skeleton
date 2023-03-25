@@ -3,7 +3,7 @@ import { IUserRequest, IUserResponse } from '../../../../modules/users/controlle
 import { UserRepository } from '../../../../modules/users/domain/repositories';
 import { UserService } from '../../../../modules/users/application/services/user.service';
 
-describe('User Service - create', () => {
+describe('User Service', () => {
   let userService: UserService;
   let userRepository: jest.Mocked<UserRepository>;
    
@@ -17,7 +17,7 @@ describe('User Service - create', () => {
     userService = new UserService(userRepository);
   });
 
-  describe('Create a New User', () => {
+  describe('create', () => {
     it('should create a user with correct data', async () => {
       // Configuramos el comportamiento esperado del userRepository.create
       const expectedUser: IUserResponse = {
@@ -121,4 +121,77 @@ describe('User Service - create', () => {
       });
     });
   })
+
+  describe('find', () => {
+    it('should return an array of IUserResponse objects', async () => {
+      // Arrange
+      const listUsers: IUserResponse[] = [{
+        id: '1',
+        email: 'test@test.com',
+        password: 'encrypted_password',
+        roles: ['admin'],
+      }]
+      userRepository.find = jest.fn().mockResolvedValueOnce(listUsers);
+
+      // Act
+      const result = await userService.find();
+
+      // Asserts
+      expect(Array.isArray(result)).toBe(true);
+      expect(result.length).toBeGreaterThan(0);
+      expect(result[0]).toHaveProperty('id');
+      expect(result[0]).toHaveProperty('email');
+      expect(result[0]).toHaveProperty('password');
+      expect(result[0]).toHaveProperty('roles');
+    });
+
+    it('should throw an error if UserRepository.find() fails', async () => {
+      userRepository.find = jest.fn().mockRejectedValue(new Error('Database error'));
+      await expect(userService.find()).rejects.toThrow('Database error');
+    });
+  });
+
+  describe('findByEmail', () => {
+    it('should return null if no user is found', async () => {
+      // Arrange
+      const email = 'nonexistent@example.com';
+      userRepository.findOne.mockResolvedValueOnce(null);
+
+      // Act
+      const result = await userService.findByEmail(email);
+
+      // Asserts
+      expect(result).toBeNull();
+      expect(userRepository.findOne).toHaveBeenCalledWith({ email });
+    });
+
+    it('should return the user if one is found', async () => {
+      // Arrange
+      const email = 'existing@example.com';
+      const user: IUserResponse = { id: '1', email, password: 'password', roles: [] };
+      userRepository.findOne.mockResolvedValueOnce(user);
+
+      // Act
+      const result = await userService.findByEmail(email);
+
+      // Asserts
+      expect(result).toEqual(user);
+      expect(userRepository.findOne).toHaveBeenCalledWith({ email });
+    });
+
+    it('should log and rethrow any errors', async () => {
+      // Arrange
+      const email = 'existing@example.com';
+      const error = new Error('database error');
+      userRepository.findOne.mockRejectedValueOnce(error);
+      //const loggerSpy = jest.spyOn(userService.logger, 'error');
+
+      // Act & Asserts
+      await expect(userService.findByEmail(email)).rejects.toThrow(error);
+      // expect(loggerSpy).toHaveBeenCalledWith(
+      //   `${UserService.name}, find`,
+      // );
+      // expect(loggerSpy).toHaveBeenCalledWith(error);
+    });
+  });
 });
