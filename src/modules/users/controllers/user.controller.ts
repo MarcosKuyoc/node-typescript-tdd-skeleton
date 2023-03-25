@@ -2,13 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Logger } from '../../../adapters/logger';
 import { UserService } from '../application/services';
-import { CreateUserWithRolesService } from '../application/usecases';
+import { IUserCreateService } from '../domain/services';
 import { IUserRequest, IUserResponse } from './user.interface';
 
 export class UserController {
   private logger = Logger.getInstance();
 
-  constructor(private userService: UserService, private userWithRolesService?: CreateUserWithRolesService) {}
+  constructor(private userService: UserService, private userWithRolesService?: IUserCreateService) {}
 
   async find(): Promise<IUserResponse[] | []> {
     this.logger.info(`${UserController.name}, find`);

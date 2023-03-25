@@ -5,7 +5,7 @@ import { LoginUseCase, SignUpUseCase } from '../../auth/aplication';
 import { RolService, UserService } from '../../users/application/services';
 import { RoleMongoRepository, UserMongoRepository } from '../../users/infraestructure/repositories/mongo';
 import { LoginController, SignUpController } from '../../auth/controllers';
-import { CreateUserWithRolesService } from '../../users/application/usecases';
+import { CreateUserWithRolesUseCase } from '../../users/application/usecases';
 import { Auth, RolAuth } from '../middleware';
 
 const logger = Logger.getInstance();
@@ -50,7 +50,7 @@ export const singUpRoute = router.post('/auth/sign-up', Auth, RolAuth(['admin'])
     const userService = new UserService(userRepository);
     const roleRepository = new RoleMongoRepository();
     const rolService = new RolService(roleRepository);
-    const userWithRolesService =  new CreateUserWithRolesService(userService, rolService);
+    const userWithRolesService =  new CreateUserWithRolesUseCase(userService, rolService);
     const payload = req.body;
     const service =  new SignUpUseCase(userWithRolesService);
     const controller = new SignUpController(service);

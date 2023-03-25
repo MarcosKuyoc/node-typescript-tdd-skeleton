@@ -5,7 +5,7 @@ import { Logger } from '../../../adapters/logger';
 import { UserMongoRepository, RoleMongoRepository } from '../../users/infraestructure/repositories/mongo';
 import { UserService,  RolService } from '../../users/application/services';
 import { Auth, RolAuth } from '../middleware';
-import { CreateUserWithRolesService } from '../../users/application/usecases';
+import { CreateUserWithRolesUseCase } from '../../users/application/usecases';
 
 const logger = Logger.getInstance();
 
@@ -89,7 +89,7 @@ export const createUser = router.post('/users', Auth, RolAuth(['basic']), async(
     const roleRepository = new RoleMongoRepository();
     const rolService = new RolService(roleRepository);
     const userService =  new UserService(userRepository);
-    const userWithRolesService =  new CreateUserWithRolesService(userService, rolService);
+    const userWithRolesService =  new CreateUserWithRolesUseCase(userService, rolService);
     const controller = new UserController(userService, userWithRolesService);
     const result = await controller.create(payload);
     return res.status(200).json(result);
