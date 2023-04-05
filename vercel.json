@@ -4,7 +4,7 @@
   "public": true,
   "functions": {
     "api": {
-      "src": "src/index.ts",
+      "handler": "src/index.ts",
       "memory": 512
     }
   },
