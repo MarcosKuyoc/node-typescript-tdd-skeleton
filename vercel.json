@@ -18,28 +18,18 @@
       "status": 204
     },
     {
-      "src": "/explorer",
-      "status": 204
-    },
-    {
-      "src": "/explorer/swagger-ui.css",
-      "status": 204
-    },
-    {
-      "src": "/explorer/swagger-ui-bundle.js",
-      "status": 204
-    },
-    {
-      "src": "/explorer/swagger-ui-init.js",
-      "status": 204
-    },
-    {
-      "src": "/explorer/swagger-ui-standalone-preset.js",
-      "status": 204
+      "src": "/api-docs",
+      "dest": "/src/api-docs/index.html"
     },
     {
       "src": "/(.*)",
-      "dest": "/src/index.ts"
+      "dest": "/src/index.ts",
+      "headers": {
+        "Cache-Control": "max-age=0"
+      }
     }
-  ]
+  ],
+  "static": {
+    "directory": "public"
+  }
 }
