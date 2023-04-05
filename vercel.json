@@ -1,11 +1,21 @@
 {
-  "name": "node-typescript-tdd-skeleton",
   "version": 2,
+  "name": "node-typescript-tdd-skeleton",
   "public": true,
+  "functions": {
+    "api": {
+      "handler": "src/index.handler",
+      "memory": 512
+    }
+  },
   "builds": [
     {
       "src": "src/index.ts",
       "use": "@vercel/node"
+    },
+    {
+      "src": "public/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -28,8 +38,5 @@
         "Cache-Control": "max-age=0"
       }
     }
-  ],
-  "static": {
-    "directory": "public"
-  }
+  ]
 }
