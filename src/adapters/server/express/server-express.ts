@@ -27,7 +27,7 @@ export class ServerExpress implements IServer {
     this.server.use(express.json());
     this.server.use(cors());
     this.server.use(loggerPino);
-    this.server.use('/explorer', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    this.server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     this.server.use(router);
   }
 
