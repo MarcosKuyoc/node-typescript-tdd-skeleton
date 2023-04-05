@@ -37,7 +37,7 @@ export class ServerExpress implements IServer {
       await this.datasources.init();
       this.logger.info(`Iniciando la aplicacion en el puerto ${this.port}`);
       this.logger.info(`http://localhost:${this.port}`);
-      this.logger.info(`http://localhost:${this.port}/explorer`);
+      this.logger.info(`http://localhost:${this.port}/api-docs`);
     } catch (error) {
       this.logger.info(error);
       throw error;

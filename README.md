@@ -40,7 +40,7 @@ $ yarn run test:cov
 
   1. https://node-typescript-tdd-skeleton.vercel.app/checkhealth
 
-  2. https://node-typescript-tdd-skeleton.vercel.app/explorer/
+  2. https://node-typescript-tdd-skeleton.vercel.app/api-docs/
   
 ## Contáctame
 
