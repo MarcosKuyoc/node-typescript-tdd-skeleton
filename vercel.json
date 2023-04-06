@@ -43,6 +43,13 @@
   "mime": {
     "text/css": [
       "css"
+    ],
+    "image/jpeg": [
+      "jpg",
+      "jpeg"
+    ],
+    "image/png": [
+      "png"
     ]
   }
 }
