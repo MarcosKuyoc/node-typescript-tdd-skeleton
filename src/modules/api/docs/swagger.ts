@@ -7,9 +7,11 @@ import { SignUpSchema } from '../../auth/domain/schemas/sign-up.schema';
 
 const port = process.env.PORT || '3000'
 let url = `http://localhost:${port}`;
+let routes = './src/modules/api/routes/*.ts'
 
 if (process.env.NODE_ENV === 'production') {
   url = (process.env.URL_VERCEL) ? process.env.URL_VERCEL : url;
+  routes = './src/modules/api/routes/*.js'
 }
 
 const swaggerDefinition: OAS3Definition = {
@@ -43,7 +45,7 @@ const swaggerDefinition: OAS3Definition = {
 const swaggerOptions: OAS3Options = {
   swaggerDefinition,
   basePath: '/',
-  apis: ['./src/modules/api/routes/*.ts'],
+  apis: [routes],
 }
 
 export default swaggerJSDoc(swaggerOptions);
