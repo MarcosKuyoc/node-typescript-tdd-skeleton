@@ -39,5 +39,10 @@
         "Cache-Control": "max-age=0"
       }
     }
-  ]
+  ],
+  "mime": {
+    "text/css": [
+      "css"
+    ]
+  }
 }
